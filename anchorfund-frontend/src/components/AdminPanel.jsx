@@ -71,9 +71,10 @@ export default function AdminPanel({ direccion, onCerrar }) {
       }
     }
     document.addEventListener("keydown", onKeyDown);
+    const botonPrevio = botonAbrioRef.current;
     return () => {
       document.removeEventListener("keydown", onKeyDown);
-      botonAbrioRef.current?.focus?.();
+      botonPrevio?.focus?.();
     };
   }, [onCerrar]);
 

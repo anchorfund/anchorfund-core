@@ -308,7 +308,7 @@ export default function DetalleProyecto({ direccion, onCerrar, onError, onToast 
       }
     }
     setCargando(false);
-  }, [balanceMXNe, cantidad, cantidadValida, superaBalance, direccion, onError, onToast, proyecto.id, refrescar, t, throttleContribuir]);
+  }, [cantidad, cantidadValida, superaBalance, direccion, onError, onToast, proyecto.id, refrescar, t, throttleContribuir]);
 
   const manejarRetirar = useCallback(async () => {
     if (!direccion) return;
