@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef } from "react";
+﻿import { useState, useEffect, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 const TOUR_STORAGE_KEY = "anchorfund.tour.completed";
@@ -9,7 +9,7 @@ export default function OnboardingTour({ isActive, onComplete }) {
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const tooltipRef = useRef(null);
 
-  const steps = [
+  const steps = useMemo(() => [
     {
       target: ".wallet-chip",
       title: t("tour.step1.title"),
@@ -40,7 +40,7 @@ export default function OnboardingTour({ isActive, onComplete }) {
       content: t("tour.step5.content"),
       placement: "bottom",
     },
-  ];
+  ], [t]);
 
   useEffect(() => {
     if (!isActive) return;
@@ -50,12 +50,12 @@ export default function OnboardingTour({ isActive, onComplete }) {
       let targetElement = null;
       try {
         targetElement = document.querySelector(step.target);
-      } catch (_) {}
+      } catch (e) { /* invalid selector – ignore */ }
 
       if (!targetElement && step.fallback) {
         try {
           targetElement = document.querySelector(step.fallback);
-        } catch (_) {}
+        } catch (e) { /* invalid selector – ignore */ }
       }
 
       if (!targetElement) return;
@@ -121,7 +121,7 @@ export default function OnboardingTour({ isActive, onComplete }) {
       window.removeEventListener("resize", updatePosition);
       window.removeEventListener("scroll", updatePosition);
     };
-  }, [isActive, currentStep]);
+  }, [isActive, currentStep, steps]);
 
   const cleanupHighlight = (selector) => {
     try {
@@ -131,7 +131,7 @@ export default function OnboardingTour({ isActive, onComplete }) {
         el.style.zIndex = "";
         el.style.boxShadow = "";
       }
-    } catch (_) {}
+    } catch (e) { /* invalid selector – ignore */ }
   };
 
   const handleNext = () => {

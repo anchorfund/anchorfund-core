@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { crearThrottle } from "../utils/throttle.js";
 import {
@@ -38,7 +38,7 @@ export default function AdminPanel({ direccion, onCerrar }) {
     setTimeout(() => setToast(null), 4500);
   }
 
-  async function cargarPendientes() {
+  const cargarPendientes = useCallback(async () => {
     try {
       const todos = await obtenerTodosLosProyectos();
       setProyectos(todos.filter((p) => p.estado === "EnRevision"));
@@ -46,10 +46,9 @@ export default function AdminPanel({ direccion, onCerrar }) {
       mostrarToast(parsearError(err), "error");
     }
     setCargando(false);
-  }
+  }, []);
 
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => { cargarPendientes(); }, []);
+  useEffect(() => { cargarPendientes(); }, [cargarPendientes]);
 
   useEffect(() => {
     const modal = modalRef.current;

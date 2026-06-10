@@ -193,7 +193,7 @@ export default function DetalleProyecto({ direccion, onCerrar, onError, onToast 
     esDueno
       ? estimarYieldDueno(proyecto)
       : BigInt(0)
-  ), [esDueno, proyecto.aportado, proyecto.capital_en_cetes, proyecto.capital_en_amm, proyecto.timestamp_inicio]);
+  ), [esDueno, proyecto]);
 
   // Documentos IPFS: "CID1|CID2|CID3" → array
   const DOC_LABELS = [
@@ -308,7 +308,7 @@ export default function DetalleProyecto({ direccion, onCerrar, onError, onToast 
       }
     }
     setCargando(false);
-  }, [balanceMXNe, cantidad, direccion, onError, onToast, proyecto.id, refrescar, t, throttleContribuir]);
+  }, [balanceMXNe, cantidad, cantidadValida, superaBalance, direccion, onError, onToast, proyecto.id, refrescar, t, throttleContribuir]);
 
   const manejarRetirar = useCallback(async () => {
     if (!direccion) return;

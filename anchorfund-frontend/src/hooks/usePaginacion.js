@@ -38,7 +38,8 @@ export default function usePaginacion(consultaFn, dependencias = []) {
       });
 
     return () => { activo = false; };
-  }, [pagina, ...dependencias]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pagina, consultaFn, ...dependencias]);
 
   return { datos, total, pagina, setPagina, cargando, totalPaginas: Math.max(1, Math.ceil(total / PAGINA_SIZE)) };
 }
