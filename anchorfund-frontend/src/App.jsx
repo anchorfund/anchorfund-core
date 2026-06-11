@@ -497,7 +497,7 @@ export default function App() {
 
               <button
                 type="button"
-                onClick={() => setTema(t => t === 'dark' ? 'light' : 'dark')}
+                onClick={() => setTema(prev => prev === 'dark' ? 'light' : 'dark')}
                 style={st.langBtn}
                 aria-label={t(tema === 'dark' ? "tema.claro" : "tema.oscuro")}
               >
@@ -691,7 +691,7 @@ function Landing({ autoConectar, onConectado, onTransparencia, onChangelog, onTe
           <span className="navbar-hide-tablet" style={st.testnetBadge}>Testnet</span>
           
           <button
-            onClick={() => setTema(t => t === 'dark' ? 'light' : 'dark')}
+            onClick={() => setTema(prev => prev === 'dark' ? 'light' : 'dark')}
             style={st.langBtn}
             aria-label={t(tema === 'dark' ? "tema.claro" : "tema.oscuro")}
           >

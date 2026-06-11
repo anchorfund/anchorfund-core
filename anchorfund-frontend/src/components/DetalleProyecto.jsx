@@ -55,10 +55,6 @@ function calcProyeccion(cantidadMXNe, meses, modo) {
   };
 }
 
-function fmt(n) {
-  return n.toLocaleString("es-MX", { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-}
-
 // SVG icons
 const IconArrowLeft = () => (
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">

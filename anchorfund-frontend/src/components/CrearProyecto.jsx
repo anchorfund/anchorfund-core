@@ -109,7 +109,6 @@ function PreviewArchivo({ archivo, onEliminar }) {
     let url = null;
     if (esImagen && archivo) {
       url = URL.createObjectURL(archivo);
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPreviewUrl(url);
     }
     return () => {
@@ -186,13 +185,13 @@ function Stepper({ pasos, pasoActual }) {
 export default function CrearProyecto({ direccion, onCerrar, onCreado, onError }) {
   const { t } = useTranslation();
   const modalRef = useRef(null);
-  const botonAbrioRef = useRef(document.activeElement);
   const [paso, setPaso] = useState(1);
   const throttleCrear = useRef(crearThrottle(5000)).current;
 
   useEffect(() => {
     const modal = modalRef.current;
     if (!modal) return;
+    const elementoAnterior = document.activeElement;
     modal.focus();
     function onKeyDown(e) {
       if (e.key === "Escape") { onCerrar(); return; }
@@ -211,7 +210,7 @@ export default function CrearProyecto({ direccion, onCerrar, onCreado, onError }
     document.addEventListener("keydown", onKeyDown);
     return () => {
       document.removeEventListener("keydown", onKeyDown);
-      botonAbrioRef.current?.focus?.();
+      elementoAnterior?.focus?.();
     };
   }, [onCerrar]);
 

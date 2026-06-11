@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef } from "react";
+﻿import { useState, useEffect, useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { obtenerTodosLosProyectos, calcularYieldDetallado, stroopsAMXNe } from "../stellar/contrato";
 import { parsearError } from "../utils/errores.js";
@@ -56,7 +56,7 @@ export default function Transparencia({ onVolver }) {
     { key: "Abandonado",   label: t("filters.abandoned")  },
   ];
 
-  async function cargar() {
+  const cargar = useCallback(async () => {
     setCargando(true);
     setErrorCarga(null);
     try {
@@ -76,9 +76,9 @@ export default function Transparencia({ onVolver }) {
     } finally {
       setCargando(false);
     }
-  }
+  }, []);
 
-  useEffect(() => { cargar(); }, []);
+  useEffect(() => { cargar(); }, [cargar]);
 
   // Paginated contributions across platform (Supabase)
   const contribPaginacion = usePaginacion(
