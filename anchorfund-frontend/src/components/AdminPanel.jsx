@@ -31,7 +31,6 @@ export default function AdminPanel({ direccion, onCerrar }) {
   const [toast,      setToast]      = useState(null);
   const throttleAdmin = useRef(crearThrottle(3000)).current;
   const modalRef      = useRef(null);
-  const botonAbrioRef = useRef(null);
 
   function mostrarToast(msg, tipo = "success") {
     setToast({ msg, tipo });
@@ -53,8 +52,8 @@ export default function AdminPanel({ direccion, onCerrar }) {
   useEffect(() => {
     const modal = modalRef.current;
     if (!modal) return;
-    // Capture the element that opened the panel at the moment the panel becomes active
-    botonAbrioRef.current = document.activeElement;
+    // Snapshot the element that triggered the panel open so we can restore focus on close
+    const elementoAnterior = document.activeElement;
     modal.focus();
     function onKeyDown(e) {
       if (e.key === "Escape") { onCerrar(); return; }
@@ -71,10 +70,9 @@ export default function AdminPanel({ direccion, onCerrar }) {
       }
     }
     document.addEventListener("keydown", onKeyDown);
-    const botonPrevio = botonAbrioRef.current;
     return () => {
       document.removeEventListener("keydown", onKeyDown);
-      botonPrevio?.focus?.();
+      elementoAnterior?.focus?.();
     };
   }, [onCerrar]);
 
