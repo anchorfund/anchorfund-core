@@ -10,9 +10,6 @@ on:
     paths:
       - 'anchorfund-frontend/**'
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 defaults:
   run:
     working-directory: anchorfund-frontend
@@ -22,6 +19,8 @@ jobs:
     name: Playwright E2E – Chromium
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout repository
